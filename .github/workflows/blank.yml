@@ -1,0 +1,16 @@
+name: CI
+on: issue_comment
+
+jobs:
+  build_by_issue:
+    # This job only runs for issue comments
+    name: Build By Issue
+    if: ${{ !github.event.issue.pull_request && github.event.issue.title == "Trigger" }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo ${{ github.event.changes.body.from }}
+          
+    #   - uses: DuckSoft/build-aur-action@master
+    #     with:
+    #       repo-name: github.event.issue.title == "Trigger"
