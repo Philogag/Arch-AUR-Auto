@@ -9,7 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo ${{ github.event.changes.body.from }}
+          echo "Issue title: ${{ github.event.issue.title }}"
+          echo "Issue body: ${{ github.event.issue.body }}"
+          echo "Full: ${{ toJson(github) }}"
           
     #   - uses: DuckSoft/build-aur-action@master
     #     with:
