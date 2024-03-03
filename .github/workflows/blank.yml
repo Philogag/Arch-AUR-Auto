@@ -6,8 +6,20 @@ jobs:
     # This job only runs for issue comments
     name: Build By Issue
     if: github.repository_owner_id == github.actor_id
+    strategy:
+      matrix:
+        repos: ${{ github.event.comment.body }}
     runs-on: ubuntu-latest
     steps:
-      - uses: DuckSoft/build-aur-action@master
+      - name: Build
+        uses: DuckSoft/build-aur-action@master
         with:
-          repo-name: ${{ github.event.comment.body }}
+          repo-name: ${{ matrix.repos }}
+      - name: Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          allowUpdates: true
+          artifacts: "./*/*.zst"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: "Build at ${{ github.event.comment.created_at }}"
+          body: "Trigger by ${{ github.event.comment.html_url }} "
