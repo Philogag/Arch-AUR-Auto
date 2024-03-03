@@ -5,14 +5,9 @@ jobs:
   build_by_issue:
     # This job only runs for issue comments
     name: Build By Issue
-    if: ${{ !github.event.issue.pull_request }}
+    if: github.repository_owner_id == github.actor_id
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo "Issue title: ${{ github.event.issue.title }}"
-          echo "Issue body: ${{ github.event.issue.body }}"
-          echo "Full: ${{ toJson(github) }}"
-          
-    #   - uses: DuckSoft/build-aur-action@master
-    #     with:
-    #       repo-name: github.event.issue.title == "Trigger"
+      - uses: DuckSoft/build-aur-action@master
+        with:
+          repo-name: ${{ github.event.comment.body }}
