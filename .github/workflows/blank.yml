@@ -8,7 +8,7 @@ jobs:
     if: github.repository_owner_id == github.actor_id
     strategy:
       matrix:
-        repos: ${{ github.event.comment.body }}
+        repos: ${{ fromJSON(github.event.comment.body) }}
     runs-on: ubuntu-latest
     steps:
       - name: Build
