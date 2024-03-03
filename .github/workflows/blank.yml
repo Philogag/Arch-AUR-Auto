@@ -5,7 +5,7 @@ jobs:
   build_by_issue:
     # This job only runs for issue comments
     name: Build By Issue
-    if: ${{ !github.event.issue.pull_request && github.event.issue.title == "Trigger" }}
+    if: ${{ !github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - run: |
